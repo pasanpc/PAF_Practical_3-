@@ -11,7 +11,18 @@
 		request.getParameter("itemPrice"), request.getParameter("itemDesc"));
 		session.setAttribute("statusMsg", stsMsg);
 		//Update item-----------------------------------
-	} 
+	} else if (request.getParameter("action").toString().equalsIgnoreCase("update")) {
+		Item itemObj = new Item();
+		String stsMsg = itemObj.updateItem(Integer.parseInt(request.getParameter("itemID").toString()),
+		request.getParameter("itemCode"), request.getParameter("itemName"), request.getParameter("itemPrice"),
+		request.getParameter("itemDesc"));
+		session.setAttribute("statusMsg", stsMsg);
+		//Remove item------------------------------------
+	} else if (request.getParameter("action").toString().equalsIgnoreCase("remove")) {
+		Item itemObj = new Item();
+		String stsMsg = itemObj.removeItem(Integer.parseInt(request.getParameter("itemID").toString()));
+		session.setAttribute("statusMsg", stsMsg);
+	}
 } else {
 	session.setAttribute("statusMsg", "");
 }

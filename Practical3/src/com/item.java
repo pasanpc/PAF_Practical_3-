@@ -101,7 +101,7 @@ public class Item {
 						+ "<input name='action' value='select' type='hidden'>"
 						+ "<input name='itemID' type='hidden' value='" + itemID + "'>" 
 						+ "</form></td>"
-						+ "<td><form method='post' action='Items.jsp'>"
+						+ "<td><form method='post' action='items.jsp'>"
 						+ "<input name='btnRemove' type='submit' value='Remove'>"
 						+ "<input name='itemID' type='hidden' value='" + itemID + "'>" 
 						+ "<input name='action' value='remove' type='hidden'>"
@@ -122,6 +122,72 @@ public class Item {
 	}
 
 
+	public String updateItem(int id, String code, String name, String price, String desc)
+	{
+		String output = "";
+		try
+		{
+			Connection con = connect();
+			if (con == null)
+			{
+				return "Error while connecting to the database";
+			}
+
+
+			String query = "update items set `itemCode`=?,`itemName`=?,`itemPrice`=?,`itemDesc`=? where `itemID`=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+
+			preparedStmt.setString(1, code);
+			preparedStmt.setString(2, name);
+			preparedStmt.setDouble(3, Double.parseDouble(price));
+			preparedStmt.setString(4, desc);
+			preparedStmt.setInt(5, id);
+
+
+			preparedStmt.executeUpdate();
+			con.close();
+			output = "Item " + id + " Updated successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while updating";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
+
+	public String removeItem(int id)
+	{
+		String output = "";
+		try
+		{
+			Connection con = connect();
+			if (con == null)
+			{
+				return "Error while connecting to the database";
+			}
+
+
+			String query = "delete from items where `itemID`=?;";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+
+
+			preparedStmt.setInt(1, id);
+
+
+			preparedStmt.executeUpdate();
+			con.close();
+			output = "Item " + id + " Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while Deleting";
+			System.err.println(e.getMessage());
+		}
+		return output;
+	}
+
 	//View Item
 	public String viewItem(int id)
 	{
@@ -137,11 +203,11 @@ public class Item {
 			String query = "select * from items where `itemID`=?;";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
-			// binding values
+
 			preparedStmt.setInt(1, id);
 			ResultSet rs = preparedStmt.executeQuery();
 
-			// iterate through the rows in the result set
+
 			if (rs.next())
 			{
 				String itemID = Integer.toString(rs.getInt("itemID"));
