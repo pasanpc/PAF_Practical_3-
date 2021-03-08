@@ -13,7 +13,7 @@
 					request.getParameter("itemPrice"), 
 					request.getParameter("itemDesc"));
 			session.setAttribute("statusMsg", stsMsg);
-			//Update item-----------------------------------
+	//Update item-----------------------------------
 		}
 		else if (request.getParameter("action").toString().equalsIgnoreCase("update")) {
 			Item itemObj = new Item();
@@ -23,7 +23,7 @@
 				request.getParameter("itemPrice"),
 				request.getParameter("itemDesc"));
 			session.setAttribute("statusMsg", stsMsg);
-			//Remove item------------------------------------
+	//Delete item------------------------------------
 		} 
 		else if (request.getParameter("action").toString().equalsIgnoreCase("remove")) {
 			Item itemObj = new Item();
@@ -40,10 +40,17 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+
+<link rel="stylesheet" href="Views/bootstrap.min.css">
+
+
 <title>Items Management</title>
 </head>
 <body>
 
+<div class="container">
+ <div class="row">
+ <div class="col">
 	<h1>Items Management</h1>
 	<%
 		if (request.getParameter("action") != null) {
@@ -53,20 +60,20 @@
 			} 
 			else {
 				out.print("<form method='post' action='items.jsp'> " + "<input name='action' value='insert' type='hidden'> "
-				+ "Item code: <input name='itemCode' type='text'><br>"
-				+ "Item name: <input name='itemName' type='text'><br> "
-				+ "Item price: <input name='itemPrice' type='text'><br> "
-				+ "Item description: <input name='itemDesc' type='text'><br> "
-				+ "<input name='btnSubmit' type='submit' value='Save'> " + "</form>");
+				+ "Item code: <input name='itemCode' type='text' class='form-control'><br>"
+				+ "Item name: <input name='itemName' type='text' class='form-control'><br> "
+				+ "Item price: <input name='itemPrice' type='text' class='form-control'><br> "
+				+ "Item description: <input name='itemDesc' type='text' class='form-control'><br> "
+				+ "<input name='btnSubmit' type='submit' value='Save' class='btn btn-primary'> " + "</form>");
 			}
 		}
 		else {
 			out.print("<form method='post' action='items.jsp'> " + "<input name='action' value='insert' type='hidden'> "
-			+ "Item code: <input name='itemCode' type='text'><br>"
-			+ "Item name: <input name='itemName' type='text'><br> "
-			+ "Item price: <input name='itemPrice' type='text'><br> "
-			+ "Item description: <input name='itemDesc' type='text'><br> "
-			+ "<input name='btnSubmit' type='submit' value='Save'> " + "</form>");
+			+ "Item code: <input name='itemCode' type='text' class='form-control'><br>"
+			+ "Item name: <input name='itemName' type='text' class='form-control'><br> "
+			+ "Item price: <input name='itemPrice' type='text' class='form-control'><br> "
+			+ "Item description: <input name='itemDesc' type='text' class='form-control'><br> "
+			+ "<input name='btnSubmit' type='submit' value='Save' class='btn btn-primary'> " + "</form>");
 		}
 	%>
 
@@ -85,6 +92,11 @@
 		Item itemObj = new Item();
 		out.print(itemObj.readItems());
 	%>
+ </div>
+ </div>
+</div>
+
+
 
 </body>
 </html>

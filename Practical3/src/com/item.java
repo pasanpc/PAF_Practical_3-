@@ -11,7 +11,7 @@ public class Item {
 		try
 		{
 			Class.forName("com.mysql.jdbc.Driver");
-			con= DriverManager.getConnection("jdbc:mysql://localhost:3306/paf",	"root", "");
+			con= DriverManager.getConnection("jdbc:mysql://localhost:3306/paf",	"root", "root");
 			//For testing
 			System.out.print("Successfully connected");
 		}
@@ -97,12 +97,12 @@ public class Item {
 
 				// buttons
 				output += "<td><form method='post' action='items.jsp'>"
-						+ "<input name='btnUpdate' type='submit' value='Update'>"
+						+ "<input name='btnUpdate' type='submit' value='Update' class='btn btn-primary'>"
 						+ "<input name='action' value='select' type='hidden'>"
 						+ "<input name='itemID' type='hidden' value='" + itemID + "'>" 
 						+ "</form></td>"
 						+ "<td><form method='post' action='items.jsp'>"
-						+ "<input name='btnRemove' type='submit' value='Remove'>"
+						+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
 						+ "<input name='itemID' type='hidden' value='" + itemID + "'>" 
 						+ "<input name='action' value='remove' type='hidden'>"
 						+ "</form></td></tr>";
@@ -165,10 +165,10 @@ public class Item {
 			Connection con = connect();
 			if (con == null)
 			{
-				return "Error while connecting to the database";
+				return "Error while connecting to the database for reading";
 			}
 
-
+			// create a prepared statement
 			String query = "delete from items where `itemID`=?;";
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 
@@ -178,11 +178,11 @@ public class Item {
 
 			preparedStmt.executeUpdate();
 			con.close();
-			output = "Item " + id + " Deleted successfully";
+			output = "Deleted successfully";
 		}
 		catch (Exception e)
 		{
-			output = "Error while Deleting";
+			output = "Error while Deleting the item";
 			System.err.println(e.getMessage());
 		}
 		return output;
